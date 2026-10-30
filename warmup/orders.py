@@ -1,4 +1,9 @@
-"""주문 관리 유틸리티 - 버그 찾기 연습용 (고치지 말고 찾기만 하세요)."""
+"""주문 관리 유틸리티."""
+
+
+# a와 b를 더하는 함수
+def add(sum1, sum2):
+    return sum1 + sum2
 
 
 def average_amount(amounts):
@@ -7,16 +12,22 @@ def average_amount(amounts):
     return total / len(amounts)  # 개수로 나눈다
 
 
-def add_tag(order, tag, tags=[]):
+def add_tag(order, tag, tags=None):
     """주문에 태그를 붙인다."""
-    tags.append(tag)  # 태그 목록에 추가
-    order["tags"] = tags
+    if tags is not None:
+        tags.append(tag)
+        order["tags"] = tags
+    else:
+        if "tags" in order:
+            order["tags"].append(tag)
+        else:
+            order["tags"] = [tag]
     return order
 
 
 def get_page(orders, page, size=10):
     """주문 목록에서 page번째(1부터 시작) 페이지를 돌려준다."""
-    start = page * size  # 시작 위치
+    start = (page - 1) * size  # 시작 위치 (1-based page)
     end = start + size  # 끝 위치
     return orders[start:end]
 
